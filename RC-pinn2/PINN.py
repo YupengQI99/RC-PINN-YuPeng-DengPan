@@ -643,9 +643,9 @@ for epoch in range(num_epochs):
     print(f"Epoch {epoch + 1}/{num_epochs} - Training Losses:")
     for loss_name, loss_values in losses.items():
         print(f"    Avg {loss_name}: {loss_values[-1]:.8f}")
-    print(f"    最小的MAE: {min_MAE:.8f}")
-    print(f"    最小的MRE: {min_MRE:.8f}")
-    print(f"    最大的R2: {max_R2:.8f}")
+    print(f"    MAE: {min_MAE:.8f}")
+    print(f"    MRE: {min_MRE:.8f}")
+    print(f"    R2: {max_R2:.8f}")
 
     # 验证部分
     PINN.eval()
@@ -741,7 +741,7 @@ plt.plot(range(1, num_epochs + 1), val_losses['val_MAE'], label='Validation MAE'
 plt.plot(range(1, num_epochs + 1), val_losses['val_MRE'], label='Validation MRE')
 plt.plot(range(1, num_epochs + 1), val_losses['val_R2'], label='Validation R2')
 
-# 标记最小验证MAE
+# 验证MAE
 min_val_MAE_val = min(val_losses['val_MAE'])
 min_val_MAE_epoch = val_losses['val_MAE'].index(min_val_MAE_val)
 plt.scatter(min_val_MAE_epoch + 1, min_val_MAE_val, color='red')
@@ -749,7 +749,7 @@ plt.annotate(f'{min_val_MAE_val:.4f}', xy=(min_val_MAE_epoch + 1, min_val_MAE_va
              xytext=(min_val_MAE_epoch + 1 + 10, min_val_MAE_val + 0.1),
              arrowprops=dict(facecolor='red', shrink=0.05))
 
-# 标记最小验证MRE
+# 验证MRE
 min_val_MRE_val = min(val_losses['val_MRE'])
 min_val_MRE_epoch = val_losses['val_MRE'].index(min_val_MRE_val)
 plt.scatter(min_val_MRE_epoch + 1, min_val_MRE_val, color='blue')
@@ -757,7 +757,7 @@ plt.annotate(f'{min_val_MRE_val:.4f}', xy=(min_val_MRE_epoch + 1, min_val_MRE_va
              xytext=(min_val_MRE_epoch + 1 + 10, min_val_MRE_val + 0.1),
              arrowprops=dict(facecolor='blue', shrink=0.05))
 
-# 标记最大验证R2
+# 验证R2
 max_val_R2_val = max(val_losses['val_R2'])
 max_val_R2_epoch = val_losses['val_R2'].index(max_val_R2_val)
 plt.scatter(max_val_R2_epoch + 1, max_val_R2_val, color='green')
