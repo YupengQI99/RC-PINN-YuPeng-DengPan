@@ -10,11 +10,16 @@ import torch
 import numpy as np
 from PINN.models import d
 
+
+# 新增特征量定义（根据实际物理问题设定）
+L = 2.5  # 特征长度（计算域总宽度）
+U = 1.0  # 特征速度（根据对流情况设定）
+T_ref = 300.0  # 参考温度（环境温度）
+ΔT = 100.0  # 特征温差（最高温与环境温差）
 # 数据加载
 train_data = pd.read_csv(r':csv')
 test_data = pd.read_csv(r'.csv')
 gaussian_data = pd.read_csv(r'.csv')  # 加载高斯生成的数据
-
 
 # 自动权重多任务损失类
 class AutomaticWeightedLoss(nn.Module):
@@ -34,6 +39,7 @@ class AutomaticWeightedLoss(nn.Module):
         for i, loss in enumerate(x):
             loss_sum += 0.5 / (self.params[i] ** 2) * loss + torch.log(1 + self.params[i] ** 2)
         return loss_sum
+
 
 
 # 引入自适应权重模块
